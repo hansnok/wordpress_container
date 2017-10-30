@@ -13,6 +13,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    secrets:
+      - wp_db_password
   mariadb:
     image: mariadb
     volumes:
@@ -27,11 +29,16 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+    secrets:
+      - wp_db_password
+      - root_db_password
+
   secrets:
     wp_db_password:
       external: true
     root_db_password:
       external: true
+
   volumes:
     mariadb_vol:
       external:
