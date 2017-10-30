@@ -9,6 +9,8 @@ services:
       - WORDREPSS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
     secrets:
       - wp_db_password
+    links:
+      - mariadb
     networks:
       - wordpress_tier
     ports:
