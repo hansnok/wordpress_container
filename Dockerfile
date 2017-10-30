@@ -39,16 +39,16 @@ RUN set -ex; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
+	chown -R www-data:www-data /usr/src/wordpress; \
 # Add WooCommerce plugin to the current container
-    curl -o  woocommerce.tar.gz -fSL "${WOOCOMMERCE_URL}"; \
-    tar -xzf woocommerce.tar.gz -C /usr/src/wordpress/wp-content/plugins/; \
-    rm woocommerce.tar.gz; \
-    chown -R www-data:www-data /usr/src/wordpress
+	curl -o  woocommerce.tar.gz -fSL "${WOOCOMMERCE_URL}"; \
+	tar -xzf woocommerce.tar.gz -C /usr/src/wordpress/wp-content/plugins/; \
+	rm woocommerce.tar.gz;
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
-RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
-    && ln -s /usr/local/bin/docker-entrypoint.sh /
+# RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
+#    && ln -s /usr/local/bin/docker-entrypoint.sh /
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
