@@ -15,7 +15,7 @@ services:
       - 443:443
   mariadb:
     image: mariadb
-    volumnes:
+    volumes:
       - mariadb_vol:/var/lib/mysql
     environment:
       - MYSQL_USER=wp
