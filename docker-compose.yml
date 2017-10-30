@@ -31,5 +31,5 @@ services:
     root_db_password:
       external: true
   volumes:
-   - mariadb_vol
+   - mariadb_vol:
       
