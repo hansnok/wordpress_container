@@ -11,8 +11,8 @@ services:
     networks:
       - wordpress_tier
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
   mariadb:
     image: mariadb
     volumes:
