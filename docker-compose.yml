@@ -7,10 +7,9 @@ services:
       - WORDPRESS_DB_USER=wp
       - WORDPRESS_DB_NAME=wp
       - WORDREPSS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
+      - WORDPRESS_DB_HOST=mariadb
     secrets:
       - wp_db_password
-    links:
-      - mariadb
     networks:
       - wordpress_tier
     ports:
