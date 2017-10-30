@@ -34,4 +34,5 @@ services:
       external: true
   volumes:
    - mariadb_vol:
-      
+  networks:
+   wordpress_tier:
