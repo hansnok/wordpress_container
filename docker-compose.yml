@@ -3,13 +3,13 @@ version: '3.1'
 services:
   wordpress:
     image: hansnok/wordpress_container
+    secrets:
+      - wp_db_password
     environment:
       - WORDPRESS_DB_USER=wp
       - WORDPRESS_DB_NAME=wp
       - WORDREPSS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
-      - WORDPRESS_DB_HOST=mariadb  
-    secrets:
-      - wp_db_password
+      - WORDPRESS_DB_HOST=mariadb
     networks:
       - wordpress_tier
     ports:
@@ -19,22 +19,22 @@ services:
     image: mariadb
     volumes:
       - mariadb_vol:/var/lib/mysql
+    secrets:
+      - wp_db_password
+      - root_db_password
     environment:
       - MYSQL_USER=wp
       - MYSQL_DATABASE=wp
       - MYSQL_PASSWORD_FILE=/run/secrets/wp_db_password
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/root_db_password
-    secrets:
-      - wp_db_password
-      - root_db_password
     networks:
       - wordpress_tier
 
 secrets:
   wp_db_password:
-    external: true
+    file: ../wp_db_password.txt
   root_db_password:
-    external: true
+    file: ../root_db_password.txt
 
 volumes:
   mariadb_vol:
