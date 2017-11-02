@@ -19,7 +19,8 @@ RUN apt-get update \
 	zlib1g-dev \
 	&& docker-php-ext-install \
 		zip \
-		bz2
+		bz2 \
+		unzip
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
 # set recommended PHP.ini settings
