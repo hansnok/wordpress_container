@@ -13,19 +13,13 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install gd mysqli opcache
 # install unzip
-RUN apt-get install -y p7zip \
-    p7zip-full \
-    unace \
-    zip \
-    unzip \
-    xz-utils \
-    sharutils \
-    uudeview \
-    mpack \
-    arj \
-    cabextract \
-    file-roller \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+	&& apt-get install -y \
+	libbz2-dev \
+	zlib1g-dev \
+	&& docker-php-ext-install \
+		zip \
+		bz2
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
 # set recommended PHP.ini settings
