@@ -15,15 +15,6 @@ RUN set -ex; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install gd mysqli opcache
-# install unzip
-#RUN apt-get update \
-#	&& apt-get install -y \
-#	libbz2-dev \
-#	zlib1g-dev \
-#	&& docker-php-ext-install \
-#		zip \
-#		bz2 \
-#		unzip
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
 # set recommended PHP.ini settings
@@ -41,10 +32,10 @@ RUN a2enmod rewrite expires
 
 VOLUME /var/www/html
 
-ENV WORDPRESS_VERSION 4.8.2
-ENV WORDPRESS_SHA1 a99115b3b6d6d7a1eb6c5617d4e8e704ed50f450
-ENV WOOCOMMERCE_URL https://github.com/woocommerce/woocommerce/archive/3.2.2.tar.gz
-ENV STOREFRONT_URL https://github.com/woocommerce/storefront/archive/version/2.2.5.tar.gz
+ENV WORDPRESS_VERSION 4.8.3
+ENV WORDPRESS_SHA1 8efc0b9f6146e143ed419b5419d7bb8400a696fc
+ENV WOOCOMMERCE_VERSION 3.2.3
+ENV STOREFRONT_VERSION 2.2.5
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
@@ -53,13 +44,13 @@ RUN set -ex; \
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
 # Add WooCommerce plugin to the current container
-	curl -o woocommerce.tar.gz -fSL "${WOOCOMMERCE_URL}"; \
+	curl -o woocommerce.tar.gz -fSL "https://github.com/woocommerce/woocommerce/archive/${WOOCOMMERCE_VERSION}.tar.gz"; \
 	tar -xzf woocommerce.tar.gz -C /usr/src/wordpress/wp-content/plugins/; \
 	rm woocommerce.tar.gz; \
 # Add Storefront plugin
-	curl -o storefront.tar.gz -fSL "${STOREFRONT_URL}"; \
-	tar -xzf storefront.tar.gz -C /usr/src/wordpress/wp-content/themes/; \
-	rm storefront.tar.gz; \
+	curl -o storefront.zip -fSL "https://github.com/woocommerce/storefront/releases/download/version%2F${STOREFRONT_VERSION}/storefront.zip"; \
+	unzip storefront.tar.gz -C /usr/src/wordpress/wp-content/themes/; \
+	rm storefront.zip; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
