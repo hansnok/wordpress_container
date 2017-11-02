@@ -32,6 +32,7 @@ VOLUME /var/www/html
 ENV WORDPRESS_VERSION 4.8.2
 ENV WORDPRESS_SHA1 a99115b3b6d6d7a1eb6c5617d4e8e704ed50f450
 ENV WOOCOMMERCE_URL https://github.com/woocommerce/woocommerce/archive/3.2.2.tar.gz
+ENV STOREFRONT_URL https://github.com/woocommerce/storefront/archive/version/2.2.5.tar.gz
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
@@ -39,11 +40,16 @@ RUN set -ex; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
-	chown -R www-data:www-data /usr/src/wordpress; \
+	#chown -R www-data:www-data /usr/src/wordpress; \
 # Add WooCommerce plugin to the current container
 	curl -o woocommerce.tar.gz -fSL "${WOOCOMMERCE_URL}"; \
 	tar -xzf woocommerce.tar.gz -C /usr/src/wordpress/wp-content/plugins/; \
-	rm woocommerce.tar.gz;
+	rm woocommerce.tar.gz; \
+# Add Storefront plugin
+	curl -o storefront.tar.gz -fSL "${STOREFRONT_URL}"; \
+	tar -xzf storefront.tar.gz -C /usr/src/wordpress/wp-content/themes/; \
+	rm storefront.tar.gz; \
+	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
