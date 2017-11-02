@@ -11,8 +11,7 @@ RUN set -ex; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd mysqli opcache; \
-	apt-get install unzip
+	docker-php-ext-install gd mysqli opcache
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
 # set recommended PHP.ini settings
@@ -41,7 +40,6 @@ RUN set -ex; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
-	#chown -R www-data:www-data /usr/src/wordpress; \
 # Add WooCommerce plugin to the current container
 	curl -o woocommerce.tar.gz -fSL "${WOOCOMMERCE_URL}"; \
 	tar -xzf woocommerce.tar.gz -C /usr/src/wordpress/wp-content/plugins/; \
