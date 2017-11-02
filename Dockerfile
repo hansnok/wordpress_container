@@ -13,9 +13,19 @@ RUN set -ex; \
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install gd mysqli opcache
 # install unzip
-RUN sudo apt-get install libbz2-1.0; \
-	sudo apt-get install libc6; \
-	sudo apt-get install unzip
+RUN apt-get install -y p7zip \
+    p7zip-full \
+    unace \
+    zip \
+    unzip \
+    xz-utils \
+    sharutils \
+    uudeview \
+    mpack \
+    arj \
+    cabextract \
+    file-roller \
+    && rm -rf /var/lib/apt/lists/*
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
 # set recommended PHP.ini settings
