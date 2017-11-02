@@ -6,10 +6,10 @@ services:
     secrets:
       - wp_db_password
     environment:
-      - WORDPRESS_DB_USER=wp
-      - WORDPRESS_DB_NAME=wp
-      - WORDREPSS_DB_PASSWORD=strongwordpress
-      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER="wp"
+      - WORDPRESS_DB_NAME="wp"
+      - WORDREPSS_DB_PASSWORD="strongwordpress"
+      - WORDPRESS_DB_HOST="mariadb"
     networks:
       - wordpress_tier
     ports:
@@ -23,10 +23,10 @@ services:
       - wp_db_password
       - root_db_password
     environment:
-      - MYSQL_USER=wp
-      - MYSQL_DATABASE=wp
-      - MYSQL_PASSWORD_FILE=/run/secrets/wp_db_password
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/root_db_password
+      - MYSQL_USER="wp"
+      - MYSQL_DATABASE="wp"
+      - MYSQL_PASSWORD_FILE="/run/secrets/wp_db_password"
+      - MYSQL_ROOT_PASSWORD_FILE="/run/secrets/root_db_password"
     networks:
       - wordpress_tier
 
