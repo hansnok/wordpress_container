@@ -49,7 +49,7 @@ RUN set -ex; \
 	rm woocommerce.tar.gz; \
 # Add Storefront plugin
 	curl -o storefront.zip -fSL "https://github.com/woocommerce/storefront/releases/download/version%2F${STOREFRONT_VERSION}/storefront.zip"; \
-	unzip storefront.tar.gz -C /usr/src/wordpress/wp-content/themes/; \
+	unzip storefront.zip -C /usr/src/wordpress/wp-content/themes/; \
 	rm storefront.zip; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
