@@ -31,7 +31,7 @@ VOLUME /var/www/html
 
 ENV WORDPRESS_VERSION 4.8.2
 ENV WORDPRESS_SHA1 a99115b3b6d6d7a1eb6c5617d4e8e704ed50f450
-ENV WOOCOMMERCE_URL https://github.com/woocommerce/woocommerce/archive/3.2.1.tar.gz
+ENV WOOCOMMERCE_URL https://github.com/woocommerce/woocommerce/archive/3.2.2.tar.gz
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
