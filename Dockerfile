@@ -7,20 +7,23 @@ RUN set -ex; \
 	apt-get install -y \
 		libjpeg-dev \
 		libpng-dev \
+		libbz2-dev \
+		zlib1g-dev \
+		unzip \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
 	docker-php-ext-install gd mysqli opcache
 # install unzip
-RUN apt-get update \
-	&& apt-get install -y \
-	libbz2-dev \
-	zlib1g-dev \
-	&& docker-php-ext-install \
-		zip \
-		bz2 \
-		unzip
+#RUN apt-get update \
+#	&& apt-get install -y \
+#	libbz2-dev \
+#	zlib1g-dev \
+#	&& docker-php-ext-install \
+#		zip \
+#		bz2 \
+#		unzip
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
 # set recommended PHP.ini settings
