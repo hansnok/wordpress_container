@@ -7,7 +7,7 @@ services:
       - WORDPRESS_DB_USER=wp
       - WORDPRESS_DB_NAME=wp
       - WORDREPSS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
-      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_HOST=mariadb  
     secrets:
       - wp_db_password
     networks:
@@ -32,9 +32,9 @@ services:
 
 secrets:
   wp_db_password:
-    file: wp_db_password.txt
+    external: true
   root_db_password:
-    file: root_db_password.txt
+    external: true
 
 volumes:
   mariadb_vol:
