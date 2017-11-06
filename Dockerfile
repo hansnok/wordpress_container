@@ -36,7 +36,6 @@ ENV WORDPRESS_VERSION 4.8.3
 ENV WORDPRESS_SHA1 8efc0b9f6146e143ed419b5419d7bb8400a696fc
 ENV WOOCOMMERCE_VERSION 3.2.3
 ENV STOREFRONT_VERSION 2.2.5
-ENV GITHUB_LANGUAGE_REPOSITORY https://github.com/hansnok/wordpress_edd.git
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
@@ -57,7 +56,7 @@ RUN set -ex; \
 	mkdir /usr/src/temp/; \
 	tar -xzf wordpress.tar.gz -C /usr/src/temp/; \
 	rm wordpress.tar.gz; \
-	cp /usr/src/temp/wordpress/wp-content/languaje /usr/src/wordpress/wp-content/; \
+	cp /usr/src/temp/wordpress/wp-content/languages /usr/src/wordpress/wp-content/; \
 	rm -R  /usr/src/temp; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
