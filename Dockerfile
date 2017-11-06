@@ -54,11 +54,11 @@ RUN set -ex; \
 	rm storefront.zip; \
 # Add Spanish languague to Wordpress
 	curl -o wordpress.tar.gz -fSL "https://es.wordpress.org/wordpress-${WORDPRESS_VERSION}-es_ES.tar.gz"; \
+	mkdir /usr/src/temp/; \
 	tar -xzf wordpress.tar.gz -C /usr/src/temp/; \
 	rm wordpress.tar.gz; \
 	cp /usr/src/temp/wordpress/wp-content/languaje /usr/src/wordpress/wp-content/; \
 	rm -R  /usr/src/temp; \
-# Add Spanish language to Woocommerce and Storefront
 	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
