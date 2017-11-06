@@ -56,7 +56,7 @@ RUN set -ex; \
 	mkdir /usr/src/temp/; \
 	tar -xzf wordpress.tar.gz -C /usr/src/temp/; \
 	rm wordpress.tar.gz; \
-	cp /usr/src/temp/wordpress/wp-content/languages/ /usr/src/wordpress/wp-content/; \
+	cp -R /usr/src/temp/wordpress/wp-content/languages/ /usr/src/wordpress/wp-content/; \
 	rm -R  /usr/src/temp; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
