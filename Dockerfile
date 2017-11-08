@@ -58,6 +58,8 @@ RUN set -ex; \
 	rm wordpress.tar.gz; \
 	cp -R /usr/src/temp/wordpress/wp-content/languages/ /usr/src/wordpress/wp-content/; \
 	rm -R  /usr/src/temp; \
+# Create folder /usr/src/wordpress/wp-content/uploads/ for share volume
+	mkdir /usr/src/wordpress/wp-content/uploads/; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
