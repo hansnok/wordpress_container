@@ -5,11 +5,13 @@ services:
     image: hansnok/wordpress_container:latest
     secrets:
       - wp_db_password
+      - wp_db_user
+      - wp_db_name
     environment:
-      - WORDPRESS_DB_USER=wp
-      - WORDPRESS_DB_NAME=wp
+      - WORDPRESS_DB_USER_FILE=/run/secrets/wp_db_user
+      - WORDPRESS_DB_NAME=/run/secrets/wp_db_name
       - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
-      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_HOST=127.0.0.1
     networks:
       - wordpress_tier
     ports:
@@ -34,14 +36,15 @@ volumes:
   - cloudsql:
 secrets:
   wp_db_password:
-    external:
-      name: wp_db_password
+    file: ./wp_db_password.txt
+  wp_db_user:
+    file: ./wp_db_user.txt
+  wp_db_name:
+    file: ./wp_db_name.txt
   credencial_sql:
-    external:
-      name: credencial_sql
+    file: ./credencial_sql.json
   instance_name:
-    external:
-      name: instance_name
+    file: ./instance_name.txt
 
 networks:
   wordpress_tier:
