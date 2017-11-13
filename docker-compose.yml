@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   wordpress:
-    image: hansnok/wordpress_container
+    image: hansnok/wordpress_container:latest
     secrets:
       - wp_db_password
     environment:
