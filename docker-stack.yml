@@ -22,9 +22,9 @@ services:
     secrets:
       - credencial_sql
       - instance_name
-    environment:
-      - credential_file=/run/secrets/credencial_sql
-      - instances_file=/run/secrets/instance_name
+    command: ["/cloud_sql_proxy", "--dir=/cloudsql",
+            "-instances=/run/secrets/instance_name=tcp:3306",
+            "-credential_file=/run/secrets/credencial_sql"]
     ports:
       - "127.0.0.1:3306:3306"
     volumes:
