@@ -9,7 +9,7 @@ services:
       - wp_db_name
     environment:
       - WORDPRESS_DB_USER_FILE=/run/secrets/wp_db_user
-      - WORDPRESS_DB_NAME=/run/secrets/wp_db_name
+      - WORDPRESS_DB_NAME_FILE=/run/secrets/wp_db_name
       - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
       - WORDPRESS_DB_HOST=127.0.0.1
     ports:
