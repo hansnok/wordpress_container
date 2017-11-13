@@ -1,0 +1,48 @@
+version: '3.1'
+
+services:
+  wordpress:
+    image: hansnok/wordpress_container:latest
+    secrets:
+      - wp_db_password
+    environment:
+      - WORDPRESS_DB_USER=wp
+      - WORDPRESS_DB_NAME=wp
+      - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
+      - WORDPRESS_DB_HOST=mariadb
+    networks:
+      - wordpress_tier
+    ports:
+      - "80:80"
+      - "443:443"
+  cloud_sql_proxy:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.11
+    secrets:
+      - credencial_sql
+      - instance_name
+    enviroment:
+      - credential_file=/run/secrets/credencial_sql
+      - instances_file=/run/secrets/instance_name
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - "/cloudsql:/cloudsql"
+    networks:
+      - wordpress_tier
+
+volumes:
+  - cloudsql:
+secrets:
+  wp_db_password:
+    external:
+      name: wp_db_password
+  credencial_sql:
+    external:
+      name: credencial_sql
+  instance_name:
+    external:
+      name: instance_name
+
+networks:
+  wordpress_tier:
+    driver: overlay
