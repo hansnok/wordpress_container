@@ -28,12 +28,12 @@ services:
     ports:
       - "127.0.0.1:3306:3306"
     volumes:
-      - "/cloudsql:/cloudsql"
+      - cloudsql:/cloudsql
     networks:
       - wordpress_tier
 
 volumes:
-  - cloudsql:
+  cloudsql:
 secrets:
   wp_db_password:
     file: ./wp_db_password.txt
