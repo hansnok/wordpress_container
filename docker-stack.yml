@@ -23,7 +23,7 @@ services:
       - credencial_sql
       - instance_name
     command: ["/cloud_sql_proxy", "--dir=/cloudsql",
-            "-instances=/run/secrets/instance_name=tcp:3306",
+            "-instances=edtech-torneo:us-east4:wp-woocommerce=tcp:3306",
             "-credential_file=/run/secrets/credencial_sql"]
     ports:
       - "127.0.0.1:3306:3306"
