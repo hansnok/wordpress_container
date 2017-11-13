@@ -36,6 +36,7 @@ ENV WORDPRESS_VERSION 4.8.3
 ENV WORDPRESS_SHA1 8efc0b9f6146e143ed419b5419d7bb8400a696fc
 ENV WOOCOMMERCE_VERSION 3.2.3
 ENV STOREFRONT_VERSION 2.2.5
+ENV WP_STATELESS_VERSION 2.1.0
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
@@ -51,6 +52,10 @@ RUN set -ex; \
 	curl -o storefront.zip -fSL "https://github.com/woocommerce/storefront/releases/download/version%2F${STOREFRONT_VERSION}/storefront.zip"; \
 	unzip storefront.zip -d /usr/src/wordpress/wp-content/themes/; \
 	rm storefront.zip; \
+# Add Google Cloud Storage plugin to do Wordpress stateless
+	curl -o wpstateless.zip -fSL "https://downloads.wordpress.org/plugin/wp-stateless.${WP_STATELESS_VERSION}.zip"; \
+	unzip wpstateless.zip -d /usr/src/wordpress/wp-content/plugins/; \
+	rm wpstateless.zip; \
 # Add Spanish languague to Wordpress
 	curl -o wordpress.tar.gz -fSL "https://es.wordpress.org/wordpress-${WORDPRESS_VERSION}-es_ES.tar.gz"; \
 	mkdir /usr/src/temp/; \
@@ -58,8 +63,6 @@ RUN set -ex; \
 	rm wordpress.tar.gz; \
 	cp -R /usr/src/temp/wordpress/wp-content/languages/ /usr/src/wordpress/wp-content/; \
 	rm -R  /usr/src/temp; \
-# Create folder /usr/src/wordpress/wp-content/uploads/ for share volume
-	mkdir /usr/src/wordpress/wp-content/uploads/; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
