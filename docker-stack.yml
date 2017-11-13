@@ -12,11 +12,10 @@ services:
       - WORDPRESS_DB_NAME=/run/secrets/wp_db_name
       - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
       - WORDPRESS_DB_HOST=127.0.0.1
-    networks:
-      - wordpress_tier
     ports:
       - "80:80"
       - "443:443"
+
   cloud_sql_proxy:
     image: gcr.io/cloudsql-docker/gce-proxy:1.11
     secrets:
@@ -29,11 +28,10 @@ services:
       - "0.0.0.0:3306:3306"
     volumes:
       - cloudsql:/cloudsql
-    networks:
-      - wordpress_tier
 
 volumes:
   cloudsql:
+
 secrets:
   wp_db_password:
     file: ./wp_db_password.txt
@@ -45,7 +43,3 @@ secrets:
     file: ./credencial_sql.json
   instance_name:
     file: ./instance_name.txt
-
-networks:
-  wordpress_tier:
-    driver: overlay
