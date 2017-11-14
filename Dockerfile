@@ -66,13 +66,9 @@ RUN set -ex; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
-COPY cloud_sql_proxy.sh /usr/local/bin/
 
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
     && ln -s /usr/local/bin/docker-entrypoint.sh /
-
-RUN chmod 777 /usr/local/bin/cloud_sql_proxy.sh \
-    && ln -s /usr/local/bin/cloud_sql_proxy.sh /
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
