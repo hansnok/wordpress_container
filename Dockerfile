@@ -37,7 +37,6 @@ ENV WORDPRESS_SHA1 8efc0b9f6146e143ed419b5419d7bb8400a696fc
 ENV WOOCOMMERCE_VERSION 3.2.3
 ENV STOREFRONT_VERSION 2.2.5
 ENV WP_STATELESS_VERSION 2.1.0
-ENV GOOGLE_CLOUD_SQL_PROXY_URL https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
@@ -57,9 +56,6 @@ RUN set -ex; \
 	curl -o wpstateless.zip -fSL "https://downloads.wordpress.org/plugin/wp-stateless.${WP_STATELESS_VERSION}.zip"; \
 	unzip wpstateless.zip -d /usr/src/wordpress/wp-content/plugins/; \
 	rm wpstateless.zip; \
-# Add Cloud SQL Proxy
-	curl -o cloud_sql_proxy -fSL "${GOOGLE_CLOUD_SQL_PROXY_URL}"; \
-	mv cloud_sql_proxy /usr/src/wordpress/wp-content/; \
 # Add Spanish languague to Wordpress
 	curl -o wordpress.tar.gz -fSL "https://es.wordpress.org/wordpress-${WORDPRESS_VERSION}-es_ES.tar.gz"; \
 	mkdir /usr/src/temp/; \
@@ -70,9 +66,13 @@ RUN set -ex; \
 	chown -R www-data:www-data /usr/src/wordpress;
 
 COPY docker-entrypoint.sh /usr/local/bin/
+COPY cloud_sql_proxy.sh /usr/local/bin/
 
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
     && ln -s /usr/local/bin/docker-entrypoint.sh /
+
+RUN chmod 777 /usr/local/bin/cloud_sql_proxy.sh \
+    && ln -s /usr/local/bin/cloud_sql_proxy.sh /
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
