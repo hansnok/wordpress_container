@@ -31,6 +31,8 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 			( set -x; ls -A; sleep 10 )
 		fi
 		tar cf - --one-file-system -C /usr/src/wordpress . | tar xf -
+		mkdir $HOME/cloud_proxy/
+		mv /usr/src/wordpress/wp-content/cloud_sql_proxy $HOME/cloud_proxy/
 		echo >&2 "Complete! WordPress has been successfully copied to $PWD"
 		if [ ! -e .htaccess ]; then
 			# NOTE: The "Indexes" option is disabled in the php:apache base image
