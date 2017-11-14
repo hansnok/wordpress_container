@@ -11,7 +11,7 @@ services:
       - WORDPRESS_DB_USER_FILE=/run/secrets/wp_db_user
       - WORDPRESS_DB_NAME_FILE=/run/secrets/wp_db_name
       - WORDPRESS_DB_PASSWORD_FILE=/run/secrets/wp_db_password
-      - WORDPRESS_DB_HOST=127.0.0.1
+      - WORDPRESS_DB_HOST=cloud_sql_proxy
     ports:
       - "80:80"
       - "443:443"
