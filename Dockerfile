@@ -58,7 +58,7 @@ RUN set -ex; \
 	unzip wpstateless.zip -d /usr/src/wordpress/wp-content/plugins/; \
 	rm wpstateless.zip; \
 # Add Cloud SQL Proxy
-	wget ${GOOGLE_CLOUD_SQL_PROXY_URL} -O cloud_sql_proxy; \
+	curl -o cloud_sql_proxy -fSL "${GOOGLE_CLOUD_SQL_PROXY_URL}"; \
 	mv cloud_sql_proxy /usr/src/wordpress/wp-content/; \
 # Add Spanish languague to Wordpress
 	curl -o wordpress.tar.gz -fSL "https://es.wordpress.org/wordpress-${WORDPRESS_VERSION}-es_ES.tar.gz"; \
